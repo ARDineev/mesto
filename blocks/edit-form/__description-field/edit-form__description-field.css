@@ -1,0 +1,23 @@
+.edit-form__description-field {
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 400;
+  height: 43px;
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  margin-top: 14px;
+  padding: 2px;
+}
+
+.edit-form__description-field:focus {
+  outline-color: #7395df;
+ }
+
+ @media screen and (max-width: 550px) {
+  .edit-form__description-field {
+    margin-top: 12px;
+    padding: 0;
+  }
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="Россия, путешествия, страна">
+  <meta name="author" content="Артур Динеев">
+  <link rel="stylesheet" href="./pages/index.css">
+  <title>Проект Mesto</title>
+</head>
+<body class="body">
+  <div class="page">
+    <header class="header">
+      <div class="header__logo"></div>
+      <div class="header__line"></div>
+    </header>
+    <main class="content">
+      <section class="profile">
+        <img class="profile__avatar" src="./images/profile-avatar.png" alt="Аватарка.">
+        <div class="profile__info">
+          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <button class="profile__edit-button" type="button">
+            <div class="profile__edit-button-image"></div>
+          </button>
+          <p class="profile__description">Исследователь океана</p>
+        </div>
+        <button class="profile__add-button" type="button">
+          <div class="profile__add-button-image"></div>
+        </button>
+      </section>
+      <ul class="elements">
+        <li>
+          <figure class="element">
+            <img class="element__image" src="./images/element-karachaevsk.png" alt="Карачаевск.">
+            <figcaption class="element__figcaption"><p class="element__caption">Карачаевск</p><div class="element__like"></div></figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure class="element">
+            <img class="element__image" src="./images/element-elbrus.png" alt="Гора Эльбрус.">
+            <figcaption class="element__figcaption"><p class="element__caption">Гора Эльбрус</p><div class="element__like"></div></figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure class="element">
+            <img class="element__image" src="./images/element-dombai.png" alt="Домбай.">
+            <figcaption class="element__figcaption"><p class="element__caption">Домбай</p><div class="element__like"></div></figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure class="element">
+            <img class="element__image" src="./images/element-elbrus.png" alt="Гора Эльбрус.">
+            <figcaption class="element__figcaption"><p class="element__caption">Гора Эльбрус</p><div class="element__like"></div></figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure class="element">
+            <img class="element__image" src="./images/element-dombai.png" alt="Домбай.">
+            <figcaption class="element__figcaption"><p class="element__caption">Домбай</p><div class="element__like"></div></figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure class="element">
+            <img class="element__image" src="./images/element-karachaevsk.png" alt="Карачаевск.">
+            <figcaption class="element__figcaption"><p class="element__caption">Карачаево-Черкесская республика</p><div class="element__like"></div></figcaption>
+          </figure>
+        </li>
+      </ul>
+    </main>
+    <footer class="footer">
+      <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
+    </footer>
+  </div>
+  <div class="edit-form">
+    <form class="edit-form__container">
+      <h2 class="edit-form__caption">Редактировать профиль</h2>
+      <input class="edit-form__name-field" type="text" name="name" maxlength="20">
+      <input class="edit-form__description-field" type="text" name="description" maxlength="50">
+      <button class="edit-form__submit-btn" type="submit">Сохранить</button>
+      <button class="edit-form__close-btn" type="button"></button>
+    </form>
+  </div>
+  <script src="scripts/index.js"></script>
+</body>
+</html>

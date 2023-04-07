@@ -1,0 +1,9 @@
+.element__figcaption {
+  background-color: white;
+  height: 79px;
+  padding: 25px 20px 31px 21px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

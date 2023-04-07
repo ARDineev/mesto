@@ -1,0 +1,9 @@
+.header {
+  width: 880px;
+}
+
+@media screen and (max-width: 900px) {
+  .header {
+    width: 100%;
+  }
+}
