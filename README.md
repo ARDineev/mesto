@@ -15,7 +15,7 @@
 * JS;
 * БЭМ.
 ## Ссылка на проект на Github Pages
-https://ardineev.github.io/russian-travel/
+https://ardineev.github.io/mesto/
 ## Авторы
 * Верстка, работа с JS - Динеев Артур;
 * Наставничество, ревью - команда Яндекс Практикум.
