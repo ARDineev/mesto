@@ -8,7 +8,7 @@
 
 @media screen and (max-width: 920px) {
   .profile {
-    width: calc(100% - 38px);
+    width: calc(100vw - 38px);
   }
 }
 
