@@ -9,6 +9,7 @@
   flex-shrink: 0;
   cursor: pointer;
   transition: 0.5s;
+  border: 0;
 }
 
 .element__like:hover {

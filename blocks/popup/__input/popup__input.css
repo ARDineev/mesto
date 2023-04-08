@@ -1,4 +1,4 @@
-.edit-form__name-field {
+.popup__input {
   border: none;
   font-family: inherit;
   font-size: 14px;
@@ -7,17 +7,17 @@
   height: 43px;
   width: 100%;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  margin-top: 30px;
-  padding: 2px;
+  margin: 6px 0 6px;
+  padding: 1.5px;
 }
 
-.edit-form__name-field:focus {
+.popup__input:focus {
   outline-color: #7395df;
- }
+}
 
- @media screen and (max-width: 550px) {
-  .edit-form__name-field {
-    margin-top: 60px;
+@media screen and (max-width: 550px) {
+  .popup__input {
+    margin: 6px 0 6px;
     padding-bottom: 0;
   }
 }

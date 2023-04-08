@@ -1,10 +1,9 @@
 .element__caption {
-  color: black;
-  font-size: 24px;
-  line-height: 29.05px;
-  font-weight: 900;
-  margin: 0;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+  background-color: white;
+  height: 79px;
+  padding: 25px 20px 31px 21px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

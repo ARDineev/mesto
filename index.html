@@ -12,58 +12,53 @@
   <div class="page">
     <header class="header">
       <div class="header__logo"></div>
-      <div class="header__line"></div>
     </header>
     <main class="content">
       <section class="profile">
         <img class="profile__avatar" src="./images/profile-avatar.png" alt="Аватарка.">
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <button class="profile__edit-button" type="button">
-            <div class="profile__edit-button-image"></div>
-          </button>
+          <button class="profile__edit-button" type="button"></button>
           <p class="profile__description">Исследователь океана</p>
         </div>
-        <button class="profile__add-button" type="button">
-          <div class="profile__add-button-image"></div>
-        </button>
+        <button class="profile__add-button" type="button"></button>
       </section>
       <ul class="elements">
         <li>
-          <figure class="element">
+          <article class="element">
             <img class="element__image" src="./images/element-karachaevsk.png" alt="Карачаевск.">
-            <figcaption class="element__figcaption"><p class="element__caption">Карачаевск</p><div class="element__like"></div></figcaption>
-          </figure>
+            <div class="element__caption"><h2 class="element__title">Карачаевск</h2><button class="element__like" type="button"></button></div>
+          </article>
         </li>
         <li>
-          <figure class="element">
+          <article class="element">
             <img class="element__image" src="./images/element-elbrus.png" alt="Гора Эльбрус.">
-            <figcaption class="element__figcaption"><p class="element__caption">Гора Эльбрус</p><div class="element__like"></div></figcaption>
-          </figure>
+            <div class="element__caption"><h2 class="element__title">Гора Эльбрус</h2><button class="element__like" type="button"></button></div>
+          </article>
         </li>
         <li>
-          <figure class="element">
+          <article class="element">
             <img class="element__image" src="./images/element-dombai.png" alt="Домбай.">
-            <figcaption class="element__figcaption"><p class="element__caption">Домбай</p><div class="element__like"></div></figcaption>
-          </figure>
+            <div class="element__caption"><h2 class="element__title">Домбай</h2><button class="element__like" type="button"></button></div>
+          </article>
         </li>
         <li>
-          <figure class="element">
+          <article class="element">
             <img class="element__image" src="./images/element-elbrus.png" alt="Гора Эльбрус.">
-            <figcaption class="element__figcaption"><p class="element__caption">Гора Эльбрус</p><div class="element__like"></div></figcaption>
-          </figure>
+            <div class="element__caption"><h2 class="element__title">Гора Эльбрус</h2><button class="element__like" type="button"></button></div>
+          </article>
         </li>
         <li>
-          <figure class="element">
+          <article class="element">
             <img class="element__image" src="./images/element-dombai.png" alt="Домбай.">
-            <figcaption class="element__figcaption"><p class="element__caption">Домбай</p><div class="element__like"></div></figcaption>
-          </figure>
+            <div class="element__caption"><h2 class="element__title">Домбай</h2><button class="element__like" type="button"></button></div>
+          </article>
         </li>
         <li>
-          <figure class="element">
+          <article class="element">
             <img class="element__image" src="./images/element-karachaevsk.png" alt="Карачаевск.">
-            <figcaption class="element__figcaption"><p class="element__caption">Карачаево-Черкесская республика</p><div class="element__like"></div></figcaption>
-          </figure>
+            <div class="element__caption"><h2 class="element__title">Карачаево-Черкесская республика</h2><button class="element__like" type="button"></button></div>
+          </article>
         </li>
       </ul>
     </main>
@@ -71,14 +66,16 @@
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
   </div>
-  <div class="edit-form">
-    <form class="edit-form__container">
-      <h2 class="edit-form__caption">Редактировать профиль</h2>
-      <input class="edit-form__name-field" type="text" name="name" maxlength="20">
-      <input class="edit-form__description-field" type="text" name="description" maxlength="50">
-      <button class="edit-form__submit-btn" type="submit">Сохранить</button>
-      <button class="edit-form__close-btn" type="button"></button>
-    </form>
+  <div class="popup">
+    <div class="popup__container">
+      <form class="popup__form" name="profile-info">
+        <h2 class="popup__caption">Редактировать профиль</h2>
+        <input class="popup__input popup__input_field_name" type="text" name="name">
+        <input class="popup__input popup__input_field_description" type="text" name="description">
+        <button class="popup__submit-btn" type="submit">Сохранить</button>
+        <button class="popup__close-btn" type="button"></button>
+      </form>
+    </div>
   </div>
   <script src="scripts/index.js"></script>
 </body>

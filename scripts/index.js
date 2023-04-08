@@ -1,31 +1,29 @@
 const openEditBtn = document.querySelector('.profile__edit-button');
-const formCloseBtn = document.querySelector('.edit-form__close-btn');
-const editForm = document.querySelector('.edit-form');
-const nameField = document.querySelector('.edit-form__name-field');
+const formCloseBtn = document.querySelector('.popup__close-btn');
+const popup = document.querySelector('.popup');
+const nameField = document.querySelector('.popup__input_field_name');
+const descriptionField = document.querySelector('.popup__input_field_description');
 const profileName = document.querySelector('.profile__name');
-const descriptionField = document.querySelector('.edit-form__description-field');
 const profileDescription = document.querySelector('.profile__description');
 
 
-function openEditForm() {
-  editForm.classList.add('edit-form_open');
+function openPopup() {
+  popup.classList.add('popup_opened');
   nameField.value = profileName.textContent;
   descriptionField.value = profileDescription.textContent;
 }
 
-function closeEditForm() {
-  editForm.classList.remove('edit-form_open');
-  nameField.value = '';
-  descriptionField.value = '';
+function closePopup() {
+  popup.classList.remove('popup_opened');
 }
 
 function handleFormSubmit (evt) {
   evt.preventDefault();
   profileName.textContent = nameField.value;
   profileDescription.textContent = descriptionField.value;
-  closeEditForm();
+  closePopup();
 }
 
-openEditBtn.addEventListener('click', openEditForm);
-formCloseBtn.addEventListener('click', closeEditForm);
-editForm.addEventListener('submit', handleFormSubmit);
+openEditBtn.addEventListener('click', openPopup);
+formCloseBtn.addEventListener('click', closePopup);
+popup.addEventListener('submit', handleFormSubmit);

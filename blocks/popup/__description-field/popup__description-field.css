@@ -1,4 +1,4 @@
-.edit-form__description-field {
+.popup__description-field {
   border: none;
   font-family: inherit;
   font-size: 14px;
@@ -11,12 +11,12 @@
   padding: 2px;
 }
 
-.edit-form__description-field:focus {
+.popup__description-field:focus {
   outline-color: #7395df;
  }
 
  @media screen and (max-width: 550px) {
-  .edit-form__description-field {
+  .popup__description-field {
     margin-top: 12px;
     padding: 0;
   }

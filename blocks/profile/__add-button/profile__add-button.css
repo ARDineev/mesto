@@ -3,10 +3,14 @@
   height: 50px;
   background-color: black;
   border: 2px solid white;
-  display: flex;
   cursor: pointer;
   transition: 0.5s;
   margin-top: 10px;
+  background-size: 22px 22px;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-image: url(../../../images/profile-add-button.svg);
+  border-radius: 2px;
 }
 
 .profile__add-button:hover {
@@ -17,5 +21,6 @@
   .profile__add-button {
     margin-top: 34px;
     width: 100%;
+    background-size: 16px 16px;
   }
 }

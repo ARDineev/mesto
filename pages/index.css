@@ -5,36 +5,33 @@
 
 @import url(../blocks/header/header.css);
 @import url(../blocks/header/__logo/header__logo.css);
-@import url(../blocks/header/__line/header__line.css);
 
 @import url(../blocks/content/content.css);
 
 @import url(../blocks/profile/profile.css);
 @import url(../blocks/profile/__avatar/profile__avatar.css);
 @import url(../blocks/profile/__add-button/profile__add-button.css);
-@import url(../blocks/profile/__add-button-image/profile__add-button-image.css);
 @import url(../blocks/profile/__info/profile__info.css);
 @import url(../blocks/profile/__name/profile__name.css);
 @import url(../blocks/profile/__description/profile__description.css);
 @import url(../blocks/profile/__edit-button/profile__edit-button.css);
-@import url(../blocks/profile/__edit-button-image/profile__edit-button-image.css);
 
 @import url(../blocks/elements/elements.css);
 @import url(../blocks/element/element.css);
 @import url(../blocks/element/__image/element__image.css);
-@import url(../blocks/element/__figcaption/element__figcaption.css);
 @import url(../blocks/element/__caption/element__caption.css);
+@import url(../blocks/element/__title/element__title.css);
 @import url(../blocks/element/__like/element__like.css);
 @import url(../blocks/element/__like/_active/element__like_active.css);
 
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
 
-@import url(../blocks/edit-form/edit-form.css);
-@import url(../blocks/edit-form/_open/edit-form_open.css);
-@import url(../blocks/edit-form/__container/edit-form__container.css);
-@import url(../blocks/edit-form/__close-btn/edit-form__close-btn.css);
-@import url(../blocks/edit-form/__caption/edit-form__caption.css);
-@import url(../blocks/edit-form/__name-field/edit-form__name-field.css);
-@import url(../blocks/edit-form/__description-field/edit-form__description-field.css);
-@import url(../blocks/edit-form/__submit-btn/edit-form__submit-btn.css);
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/_opened/popup_opened.css);
+@import url(../blocks/popup/__container/popup__container.css);
+@import url(../blocks/popup/__close-btn/popup__close-btn.css);
+@import url(../blocks/popup/__caption/popup__caption.css);
+@import url(../blocks/popup/__input/popup__input.css);
+@import url(../blocks/popup/__description-field/popup__description-field.css);
+@import url(../blocks/popup/__submit-btn/popup__submit-btn.css);

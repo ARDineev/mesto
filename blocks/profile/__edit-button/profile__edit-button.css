@@ -3,12 +3,15 @@
   height: 24px;
   background-color: black;
   border: 1px solid white;
-  display: flex;
   cursor: pointer;
   align-self: flex-end;
   margin: 0 2px 12px 20px;
   padding: 0;
   transition: 0.5s;
+  background-size: 10px 10px;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-image: url(../../../images/profile-edit-button.svg);
 }
 
 .profile__edit-button:hover {
@@ -19,13 +22,13 @@
   .profile__edit-button {
     width: 18px;
     height: 18px;
+    background-size: 7.5px 7.5px;
   }
 }
 
 @media screen and (max-width: 600px) {
   .profile__edit-button {
     margin-bottom: 8px;
-    margin-left: 10px;
-    transform: translateX(17px);
+    margin-left: 10px;    
   }
 }
