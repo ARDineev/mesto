@@ -1,6 +1,6 @@
 .popup__close-btn_type_picture {
-  left: 100%; 
-  bottom: 100%; 
+  left: 100%;
+  bottom: 100%;
   transform: translateX(25%) translateY(-25%);
 }
 
@@ -8,4 +8,4 @@
   .popup__close-btn_type_picture { 
     transform: translateX(-100%) translateY(0); 
   } 
-} 
+}
