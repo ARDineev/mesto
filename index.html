@@ -24,54 +24,13 @@
         <button class="profile__add-button" type="button"></button>
       </section>
       <ul class="elements">
-        <li class="elements__item">
-          <article class="element">
-            <img class="element__image" src="./images/element-karachaevsk.png" alt="Карачаевск.">
-            <div class="element__caption"><h2 class="element__title">Карачаевск</h2><button class="element__like" type="button"></button></div>
-            <button class="element__delete" type="button"></button>
-          </article>
-        </li>
-        <li class="elements__item">
-          <article class="element">
-            <img class="element__image" src="./images/element-elbrus.png" alt="Гора Эльбрус.">
-            <div class="element__caption"><h2 class="element__title">Гора Эльбрус</h2><button class="element__like" type="button"></button></div>
-            <button class="element__delete" type="button"></button>
-          </article>
-        </li>
-        <li class="elements__item">
-          <article class="element">
-            <img class="element__image" src="./images/element-dombai.png" alt="Домбай.">
-            <div class="element__caption"><h2 class="element__title">Домбай</h2><button class="element__like" type="button"></button></div>
-            <button class="element__delete" type="button"></button>
-          </article>
-        </li>
-        <li class="elements__item">
-          <article class="element">
-            <img class="element__image" src="./images/element-elbrus.png" alt="Гора Эльбрус.">
-            <div class="element__caption"><h2 class="element__title">Гора Эльбрус</h2><button class="element__like" type="button"></button></div>
-            <button class="element__delete" type="button"></button>
-          </article>
-        </li>
-        <li class="elements__item">
-          <article class="element">
-            <img class="element__image" src="./images/element-dombai.png" alt="Домбай.">
-            <div class="element__caption"><h2 class="element__title">Домбай</h2><button class="element__like" type="button"></button></div>
-            <button class="element__delete" type="button"></button>
-          </article>
-        </li>
-        <li class="elements__item">
-          <article class="element">
-            <img class="element__image" src="./images/element-karachaevsk.png" alt="Карачаевск.">
-            <div class="element__caption"><h2 class="element__title">Карачаево-Черкесская республика</h2><button class="element__like" type="button"></button></div>
-            <button class="element__delete" type="button"></button>
-          </article>
-        </li>
       </ul>
     </main>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
   </div>
+
   <div class="popup popup_type_edit">
     <div class="popup__container">
       <h2 class="popup__caption">Редактировать профиль</h2>
@@ -88,8 +47,8 @@
     <div class="popup__container">
       <h2 class="popup__caption">Новое место</h2>
       <form class="popup__form" name="place-info">     
-        <input class="popup__input popup__input_field_place" type="text" name="place">
-        <input class="popup__input popup__input_field_img-url" type="text" name="img-url">
+        <input class="popup__input popup__input_field_place" type="text" name="place" placeholder="Название">
+        <input class="popup__input popup__input_field_img-url" type="text" name="img-url" placeholder="Ссылка на картинку">
         <button class="popup__submit-btn popup__submit-btn_type_add" type="submit">Создать</button>
       </form>
       <button class="popup__close-btn popup__close-btn_type_add" type="button"></button>
@@ -98,8 +57,8 @@
 
   <div class="popup popup_type_picture">
     <div class="popup__image-container">
-      <img class="popup__image" src="./images/element-karachaevsk1.png" alt="Гора Эльбрус.">
-      <p class="popup__image-caption">Гора Эльбрус.</p>
+      <img class="popup__image" src="" alt="">
+      <p class="popup__image-caption">Место</p>
       <button class="popup__close-btn popup__close-btn_type_picture" type="button"></button>
     </div>
   </div>
