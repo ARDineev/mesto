@@ -1,55 +1,28 @@
-const openEditBtn = document.querySelector('.profile__edit-button');
-const openAddBtn = document.querySelector('.profile__add-button');
-
-const closeBtns = document.querySelectorAll('.popup__close-btn');
+const profile = document.querySelector('.profile');
+const profileName = profile.querySelector('.profile__name');
+const profileDescription = profile.querySelector('.profile__description');
+const openEditBtn = profile.querySelector('.profile__edit-button');
+const openAddBtn = profile.querySelector('.profile__add-button');
 
 const popupEdit = document.querySelector('.popup_type_edit');
+const nameField = popupEdit.querySelector('.popup__input_field_name');
+const descriptionField = popupEdit.querySelector('.popup__input_field_description');
+
 const popupAdd = document.querySelector('.popup_type_add');
+const placeField = popupAdd.querySelector('.popup__input_field_place');
+const imgField = popupAdd.querySelector('.popup__input_field_img-url');
+
 const popupPicture = document.querySelector('.popup_type_picture');
-
-const nameField = document.querySelector('.popup__input_field_name');
-const descriptionField = document.querySelector('.popup__input_field_description');
-
-const placeField = document.querySelector('.popup__input_field_place');
-const imgField = document.querySelector('.popup__input_field_img-url');
-
-const profileName = document.querySelector('.profile__name');
-const profileDescription = document.querySelector('.profile__description');
+const imagePopup = popupPicture.querySelector('.popup__image');
+const imageCaptionPopup = popupPicture.querySelector('.popup__image-caption');
 
 const placeContainer = document.querySelector('.elements');
-
-const imagePopup = document.querySelector('.popup__image');
-const imageCaptionPopup = document.querySelector('.popup__image-caption');
-
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-]; 
+const placeTemplate = document.querySelector('#place-template').content;
+const closeBtns = document.querySelectorAll('.popup__close-btn');
 
 initialCards.forEach((card) => {
-  addPlace(card.name, card.link);
+  const place = createPlace(card.name, card.link);
+  placeContainer.append(place);
 });
 
 function openPopup(popup) {
@@ -60,8 +33,7 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened');
 };
 
-function addPlace(placeValue, imgValue) {
-  const placeTemplate = document.querySelector('#place-template').content;
+function createPlace(placeValue, imgValue) {
   const placeElement = placeTemplate.querySelector('.elements__item').cloneNode(true);
   const elementTitle = placeElement.querySelector('.element__title');
   const elementImage = placeElement.querySelector('.element__image');
@@ -71,7 +43,7 @@ function addPlace(placeValue, imgValue) {
   elementTitle.textContent = placeValue;
   elementImage.src = imgValue;
   elementImage.alt = placeValue;
-
+  
   elementLike.addEventListener('click', () => {
     elementLike.classList.toggle('element__like_active');
   });
@@ -86,7 +58,7 @@ function addPlace(placeValue, imgValue) {
     placeElement.remove();
   });
 
-  placeContainer.prepend(placeElement);
+  return placeElement;
 };
 
 function handleEditFormSubmit (evt) {
@@ -98,9 +70,8 @@ function handleEditFormSubmit (evt) {
 
 function handleAddFormSubmit (evt) {
   evt.preventDefault();
-  const place = document.querySelector('.popup__input_field_place');
-  const imgUrl = document.querySelector('.popup__input_field_img-url');
-  addPlace(place.value, imgUrl.value);
+  const place = createPlace(placeField.value, imgField.value);
+  placeContainer.prepend(place);
   closePopup(popupAdd);
 }
 

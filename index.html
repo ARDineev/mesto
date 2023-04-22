@@ -32,7 +32,7 @@
   </div>
 
   <div class="popup popup_type_edit">
-    <div class="popup__container">
+    <div class="popup__container popup__container_type_form">
       <h2 class="popup__caption">Редактировать профиль</h2>
       <form class="popup__form" name="profile-info">     
         <input class="popup__input popup__input_field_name" type="text" name="name">
@@ -44,7 +44,7 @@
   </div>
 
   <div class="popup popup_type_add">
-    <div class="popup__container">
+    <div class="popup__container popup__container_type_form">
       <h2 class="popup__caption">Новое место</h2>
       <form class="popup__form" name="place-info">     
         <input class="popup__input popup__input_field_place" type="text" name="place" placeholder="Название">
@@ -56,7 +56,7 @@
   </div>
 
   <div class="popup popup_type_picture">
-    <div class="popup__image-container">
+    <div class="popup__container popup__container_type_picture">
       <img class="popup__image" alt="">
       <p class="popup__image-caption">Место</p>
       <button class="popup__close-btn popup__close-btn_type_picture" type="button"></button>
@@ -66,12 +66,13 @@
   <template id="place-template">
     <li class="elements__item">
       <article class="element">
-        <img class="element__image">
+        <img class="element__image" onerror="this.onerror=null; this.src='./images/not-found.jpg';">
         <div class="element__caption"><h2 class="element__title"></h2><button class="element__like" type="button"></button></div>
         <button class="element__delete" type="button"></button>
       </article>
     </li>
   </template>
+  <script src="scripts/constants.js"></script>
   <script src="scripts/index.js"></script>
 </body>
 </html>
