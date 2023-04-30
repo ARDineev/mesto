@@ -4,10 +4,10 @@
   font-size: 14px;
   line-height: 17px;
   font-weight: 400;
-  height: 43px;
+  height: 40px;
   width: 100%;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  margin: 6px 0 6px;
+  margin: 0;
   padding: 1.5px;
 }
 
@@ -21,7 +21,6 @@
 
 @media screen and (max-width: 550px) {
   .popup__input {
-    margin: 6px 0 6px;
     padding-bottom: 0;
   }
 }

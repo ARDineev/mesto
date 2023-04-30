@@ -5,10 +5,14 @@ const openEditBtn = profile.querySelector('.profile__edit-button');
 const openAddBtn = profile.querySelector('.profile__add-button');
 
 const popupEdit = document.querySelector('.popup_type_edit');
+const popupEditForm = popupEdit.querySelector('.popup__form');
+const popupEditSubmitBtn = popupEdit.querySelector('.popup__submit-btn');
 const nameField = popupEdit.querySelector('.popup__input_field_name');
 const descriptionField = popupEdit.querySelector('.popup__input_field_description');
 
 const popupAdd = document.querySelector('.popup_type_add');
+const popupAddForm = popupAdd.querySelector('.popup__form');
+const popupAddSubmitBtn = popupAdd.querySelector('.popup__submit-btn');
 const placeField = popupAdd.querySelector('.popup__input_field_place');
 const imgField = popupAdd.querySelector('.popup__input_field_img-url');
 
@@ -19,6 +23,7 @@ const imageCaptionPopup = popupPicture.querySelector('.popup__image-caption');
 const placeContainer = document.querySelector('.elements');
 const placeTemplate = document.querySelector('#place-template').content;
 const closeBtns = document.querySelectorAll('.popup__close-btn');
+const popups = document.querySelectorAll('.popup');
 
 initialCards.forEach((card) => {
   const place = createPlace(card.name, card.link);
@@ -78,12 +83,18 @@ function handleAddFormSubmit (evt) {
 openEditBtn.addEventListener('click', () => {
   nameField.value = profileName.textContent;
   descriptionField.value = profileDescription.textContent;
+  hideInputError(popupEditForm, nameField, config);
+  hideInputError(popupEditForm, descriptionField, config);
+  toggleButtonState([nameField, descriptionField], popupEditSubmitBtn, config);
   openPopup(popupEdit);
 });
 
 openAddBtn.addEventListener('click', () => {
   placeField.value = '';
   imgField.value = '';
+  hideInputError(popupAddForm, placeField, config);
+  hideInputError(popupAddForm, imgField, config);
+  toggleButtonState([placeField, imgField], popupAddSubmitBtn, config);
   openPopup(popupAdd);
 });
 
@@ -94,5 +105,21 @@ closeBtns.forEach((btn) => {
   btn.addEventListener('click', () => {
     const popup = btn.closest('.popup');
     closePopup(popup);
+  });
+});
+
+document.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Escape') {
+    popups.forEach((popup) => {
+      closePopup(popup);
+    });
+  };
+});
+
+popups.forEach((popup) => {
+  popup.addEventListener('click', (evt) => {
+    if (evt.target === evt.currentTarget) {
+      closePopup(popup);
+    };
   });
 });
