@@ -24,10 +24,73 @@ const placeContainer = document.querySelector('.elements');
 const placeTemplate = document.querySelector('#place-template').content;
 const popups = document.querySelectorAll('.popup');
 
-initialCards.forEach((card) => {
-  const place = createPlace(card.name, card.link);
-  placeContainer.append(place);
+
+class Card {
+  //Класс карточки с фотографией местности и подписью.
+  //Экземпляры класса могут быть "лайкнуты" и удалены нажатием
+  //на соответствующие кнопки. Для создания карточки передаются
+  //аргументы: объект со ссылкой на фотографию и текстом подписи,
+  //а также css-селектор с шаблоном карточки
+  constructor(data, templateSelector) {
+    this._title = data.name;
+    this._image = data.link;
+    this._templateSelector = templateSelector; 
+  }
+
+  _getTemplate() {
+    //приватная функция, "клонирующая" шаблон будущей карточки
+    const cardElement = document
+      .querySelector(this._templateSelector)
+      .content
+      .querySelector('.elements__item')
+      .cloneNode(true);
+
+    return cardElement;
+  }
+
+  generateCard() {
+    //публичный метод, создающий карточку с переданными параметрами и добавляющий интерактивным
+    //элементам карточки слушателей событий. Метод возвращает объект карточки (который затем помещается в
+    //DOM с помощью других функций)
+    this._element = this._getTemplate();
+    this._elementImage = this._element.querySelector('.element__image');
+    this._elementTitle = this._element.querySelector('.element__title');
+    this._elementLike = this._element.querySelector('.element__like');
+    this._elementDelBtn = this._element.querySelector('.element__delete');
+    this._elementImage.src = this._image;
+    this._elementImage.alt = this._title;
+    this._elementTitle.textContent = this._title;;
+    this._setEventListeners();
+    return this._element;
+  }
+  
+  _setEventListeners() {
+    //приватный метод, который назначает слушателей события "click" на следующие
+    //интерактивные элементы:
+    // - картинка карточки, при клике фотография передается в соответствующий popup;
+    // - кнопка "лайк", при клике на которую меняется состояние данного элемента;
+    // - кнопка удаления, при клике на которую вся карточка удаляется 
+    this._elementImage.addEventListener('click', () => {
+      imagePopup.src = this._elementImage.src;
+      imagePopup.alt = this._elementTitle.textContent;
+      imageCaptionPopup.textContent = this._elementTitle.textContent;
+      openPopup(popupPicture);
+    });
+    this._elementLike.addEventListener('click', () => {
+      this._elementLike.classList.toggle('element__like_active');
+    });
+    this._elementDelBtn.addEventListener('click', () => {
+      this._element.remove();
+    });
+  }
+}
+
+initialCards.forEach((item) => {
+  const card = new Card(item, '#place-template');
+  const cardElement = card.generateCard();
+  placeContainer.append(cardElement);
 });
+
 
 function closeByEscape(evt) {
   if (evt.key === 'Escape') {
@@ -46,34 +109,6 @@ function closePopup(popup) {
   document.removeEventListener('keydown', closeByEscape);
 };
 
-function createPlace(placeValue, imgValue) {
-  const placeElement = placeTemplate.querySelector('.elements__item').cloneNode(true);
-  const elementTitle = placeElement.querySelector('.element__title');
-  const elementImage = placeElement.querySelector('.element__image');
-  const elementLike = placeElement.querySelector('.element__like');
-  const deleteBtn = placeElement.querySelector('.element__delete');
-
-  elementTitle.textContent = placeValue;
-  elementImage.src = imgValue;
-  elementImage.alt = placeValue;
-  
-  elementLike.addEventListener('click', () => {
-    elementLike.classList.toggle('element__like_active');
-  });
-
-  elementImage.addEventListener('click', () => {
-    imagePopup.src = elementImage.src;
-    imagePopup.alt = elementTitle.textContent;
-    imageCaptionPopup.textContent = elementTitle.textContent;
-    openPopup(popupPicture);
-  });
-    
-  deleteBtn.addEventListener('click', () => {
-    placeElement.remove();
-  });
-
-  return placeElement;
-};
 
 function handleEditFormSubmit (evt) {
   evt.preventDefault();
@@ -84,24 +119,34 @@ function handleEditFormSubmit (evt) {
 
 function handleAddFormSubmit (evt) {
   evt.preventDefault();
-  const place = createPlace(placeField.value, imgField.value);
-  placeContainer.prepend(place);
+
+ // const card = new Card(item, '#place-template');
+//  const cardElement = card.generateCard();
+ // placeContainer.append(cardElement);
+  const card = new Card({name: placeField.value, link: imgField.value}, '#place-template');
+  const cardElement = card.generateCard();
+ // const place = createPlace(placeField.value, imgField.value);
+  placeContainer.prepend(cardElement);
   closePopup(popupAdd);
 }
 
 openEditBtn.addEventListener('click', () => {
-  nameField.value = profileName.textContent;
-  descriptionField.value = profileDescription.textContent;
-  hideInputError(popupEditForm, nameField, config);
-  hideInputError(popupEditForm, descriptionField, config);
-  toggleButtonState([nameField, descriptionField], popupEditSubmitBtn, config);
+  nameField.defaultValue = profileName.textContent;
+  descriptionField.defaultValue = profileDescription.textContent;
+  popupEditForm.reset();
+  console.log(nameField.value);
+
+  
+ // hideInputError(popupEditForm, nameField, config);
+ // hideInputError(popupEditForm, descriptionField, config);
+ // toggleButtonState([nameField, descriptionField], popupEditSubmitBtn, config);
   openPopup(popupEdit);
 });
 
 openAddBtn.addEventListener('click', () => {
   popupAddForm.reset();
-  hideInputError(popupAddForm, placeField, config);
-  hideInputError(popupAddForm, imgField, config);
+ // hideInputError(popupAddForm, placeField, config);
+ // hideInputError(popupAddForm, imgField, config);
   openPopup(popupAdd);
 });
 
