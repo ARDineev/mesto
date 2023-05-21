@@ -5,11 +5,13 @@ export default class Card {
   //аргументы: объект со ссылкой на фотографию и текстом подписи,
   //а также css-селектор с шаблоном карточки.
   //Третьим аргументом передается функция открытия popup, реализованная извне.
-  constructor(data, templateSelector, openPopup) {
+  //Четвертым аргументом передается функция зумирования фотографии, также реализованная извне.
+  constructor(data, templateSelector, openPopup, handleImageClick) {
     this._title = data.name;
     this._image = data.link;
     this._templateSelector = templateSelector;
     this._openPopup = openPopup;
+    this._handleImageClick = handleImageClick;
   }
 
   _getTemplate() {
@@ -38,17 +40,6 @@ export default class Card {
     this._setEventListeners();
     return this._element;
   }
-  
-  _handleImageClick() {
-    //приватный метод зумирования фотографии
-    const popupPicture = document.querySelector('.popup_type_picture');
-    const imagePopup = popupPicture.querySelector('.popup__image');
-    const imageCaptionPopup = popupPicture.querySelector('.popup__image-caption');
-    imagePopup.src = this._elementImage.src;
-    imagePopup.alt = this._elementTitle.textContent;
-    imageCaptionPopup.textContent = this._elementTitle.textContent;
-    this._openPopup(popupPicture);
-  }
 
   _handleLikeClick() {
     //приватный метод "лайка" карточки
@@ -58,6 +49,7 @@ export default class Card {
   _handleDelBtnClick() {
     //приватный метод удаления карточки
     this._element.remove();
+    this._element = null;
   }
 
   _setEventListeners() {
