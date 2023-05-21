@@ -1,17 +1,9 @@
-const config = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__submit-btn',
-  inactiveButtonClass: 'popup__submit-btn_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-}
-
-class FormValidator {
+export default class FormValidator {
   //Класс, отвечающий за валидацию полей форм.
   //Чтобы добавить форме валидацию, необходимо создать экземпляр данного класса
   //с нужной формой, переданной вторым аргументом. Первым аргументом является
-  //объект с селекторами.
+  //объект с селекторами. После создания экземпляра класса валидация активируется
+  //методом enableValidation()
   constructor(data, formElement) {
     this._inputSelector = data.inputSelector;
     this._submitButtonSelector = data.submitButtonSelector;
@@ -54,8 +46,6 @@ class FormValidator {
     //приватная функция, которая ищет в списке всех полей формы хотя бы один невалидный input,
     //и, если такой находится, то функция возвращает true
     return this._inputFields.some((inputElement) => {
-      console.log(`${inputElement.value}`);
-      console.log(`${inputElement.validity.valid}`);
       return inputElement.validity.valid === false;
     });
   };
@@ -106,8 +96,3 @@ class FormValidator {
     this._setEventListeners(); //form, inputFields, submitButton, obj);
   }
 }
-
-document.querySelectorAll('.popup__form').forEach((form) => {
-  const formValidator = new FormValidator(config, form);
-  formValidator.enableValidation();
-});
