@@ -59,7 +59,6 @@ openEditBtn.addEventListener('click', () => {
   nameField.defaultValue = profileName.textContent;
   descriptionField.defaultValue = profileDescription.textContent;
   popupEditForm.reset();
-  console.log(nameField.value);
   openPopup(popupEdit);
 });
 
