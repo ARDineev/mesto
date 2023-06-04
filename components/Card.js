@@ -4,14 +4,13 @@ export default class Card {
   //на соответствующие кнопки. Для создания карточки передаются
   //аргументы: объект со ссылкой на фотографию и текстом подписи,
   //а также css-селектор с шаблоном карточки.
-  //Третьим аргументом передается функция открытия popup, реализованная извне.
-  //Четвертым аргументом передается функция зумирования фотографии, также реализованная извне.
-  constructor(data, templateSelector, openPopup, handleImageClick) {
+  //Третьим аргументом передается функция зумирования фотографии, реализованная извне.
+
+  constructor(data, templateSelector, handleCardClick) {
     this._title = data.name;
     this._image = data.link;
     this._templateSelector = templateSelector;
-    this._openPopup = openPopup;
-    this._handleImageClick = handleImageClick;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -60,7 +59,7 @@ export default class Card {
     // - кнопка удаления, при клике на которую вся карточка удаляется
 
     this._elementImage.addEventListener('click', () => {
-      this._handleImageClick();
+      this._handleCardClick();
     });
     this._elementLike.addEventListener('click', () => {
       this._handleLikeClick();

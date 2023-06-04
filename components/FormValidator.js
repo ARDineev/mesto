@@ -75,6 +75,7 @@ export default class FormValidator {
     //деактивируется, а все ошибки скрываются;
     // - на событие "input", при этом инициируется проверка валидности полей формы при любом изменении
     //в каждом из полей, и, при необходимости, кнопка submit становится активной/неактивной
+    this._disableButton(); // при первом открытии попапа кнопка должна быть неактивной
     this._formElement.addEventListener('reset', () => {
       this._disableButton();
       this._inputFields.forEach((inputElement) => {
@@ -93,6 +94,6 @@ export default class FormValidator {
     //публичный метод, при вызове которого у формы инициируется постоянный процесс проверки полей на валидность 
     this._inputFields = Array.from(this._formElement.querySelectorAll(`${this._inputSelector}`));
     this._submitButton = this._formElement.querySelector(`${this._submitButtonSelector}`);
-    this._setEventListeners(); //form, inputFields, submitButton, obj);
+    this._setEventListeners();
   }
 }
