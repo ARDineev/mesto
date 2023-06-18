@@ -4,8 +4,27 @@
   "description": "Рад вам представить одностраничный сайт с интересным дизайном.  \r В данном учебном проекте мной отрабатывались навыки по таким замечательным вещам, как:\r * адаптивная верстка с особым вниманием на grid и flex;\r * работа с макетом в Figma;\r * локальное подключение шрифтов;\r * работа с JS: взаимодействие с DOM-элементами, массивами, циклами, функциями;\r * валидация форм на стороне JS;\r * элементы ООП, модули;\r * создание файловой системы проекта по БЭМ (Nested).",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --mode production",
+    "dev": "webpack serve"
   },
   "author": "Artur Dineev",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.22.1",
+    "@babel/preset-env": "^7.22.4",
+    "autoprefixer": "^10.4.14",
+    "babel-loader": "^9.1.2",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.8.1",
+    "cssnano": "^6.0.1",
+    "html-webpack-plugin": "^5.5.1",
+    "mini-css-extract-plugin": "^2.7.6",
+    "postcss-loader": "^7.3.2",
+    "webpack": "^5.85.0",
+    "webpack-cli": "^5.1.2",
+    "webpack-dev-server": "^4.15.0"
+  },
+  "dependencies": {
+    "core-js": "^3.30.2"
+  }
 }

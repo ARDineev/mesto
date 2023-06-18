@@ -20,9 +20,9 @@ export default class Section {
     this._container.prepend(element);
   }
 
-  renderItems() {
+  renderItems(array = this._initialArray) {
     // публичный метод, отрисовывает весь массив данных, применив функцию renderer
-    this._initialArray.forEach(item => {
+    array.forEach(item => {
       this._renderer(item);
     });
   }

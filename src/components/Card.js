@@ -6,11 +6,15 @@ export default class Card {
   //а также css-селектор с шаблоном карточки.
   //Третьим аргументом передается функция зумирования фотографии, реализованная извне.
 
-  constructor(data, templateSelector, handleCardClick) {
+  constructor(data, templateSelector, handleCardClick, handleCardLike, isOwner, isLike) {
     this._title = data.name;
     this._image = data.link;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
+    this._handleCardLike = handleCardLike;
+    this._id = data._id;
+    this._isOwner = isOwner;
+    this._isLike = isLike;
   }
 
   _getTemplate() {
@@ -37,12 +41,9 @@ export default class Card {
     this._elementImage.alt = this._title;
     this._elementTitle.textContent = this._title;;
     this._setEventListeners();
+    if (!this._isOwner) this._elementDelBtn.remove();
+    if (this._isLike) this._elementLike.classList.add('element__like_active');
     return this._element;
-  }
-
-  _handleLikeClick() {
-    //приватный метод "лайка" карточки
-    this._elementLike.classList.toggle('element__like_active');
   }
 
   _handleDelBtnClick() {
@@ -62,10 +63,12 @@ export default class Card {
       this._handleCardClick();
     });
     this._elementLike.addEventListener('click', () => {
-      this._handleLikeClick();
+      this._handleCardLike(this._id);
     });
-    this._elementDelBtn.addEventListener('click', () => {
-      this._handleDelBtnClick();
-    });
+    if (this._isOwner) {
+      this._elementDelBtn.addEventListener('click', () => {
+        this._handleDelBtnClick();
+      });
+    }
   }
 }

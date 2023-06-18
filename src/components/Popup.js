@@ -9,16 +9,16 @@ export default class Popup {
   open() {
     // публичный метод, открывает попап и устанавливает ему слушатель клавиши ESC
     this._popup.classList.add('popup_opened');
-    document.addEventListener('keydown', this._handleEscClose.bind(this));
+    document.addEventListener('keydown', this._handleEscClose);
   }
 
   close() {
     // публичный метод, закрывает попап и удаляет слушатель клавиши ESC
     this._popup.classList.remove('popup_opened');
-    document.removeEventListener('keydown', this._handleEscClose.bind(this));
+    document.removeEventListener('keydown', this._handleEscClose);
   }
 
-  _handleEscClose(evt) {
+  _handleEscClose = (evt) => {
     // приватный метод-слушатель события нажатия на клавишу ESC
     if (evt.key === 'Escape') {
        this.close();
