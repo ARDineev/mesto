@@ -12,6 +12,7 @@ import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupConfirmDel from '../components/PopupConfirmDel';
 import UserInfo from '../components/UserInfo.js';
 import { config } from '../utils/constants.js'; 
 
@@ -32,6 +33,24 @@ const userInfo = new UserInfo({
 });
 
 
+function handleCardDelete(card) {
+  api.deleteCard(card.id)
+    .then(() => {
+      card.cardRemoveElement();
+    })
+    .catch((err) => {
+      console.log('Не удалось удалить карточку', err);
+    })
+    .finally(() => {
+      this.close();
+    })
+}
+
+
+const popupConfirmDel = new PopupConfirmDel('.popup_type_confirm', handleCardDelete);
+popupConfirmDel.setEventListeners();
+
+
 function handleCardClick() {
   popupWithImage.open(this._elementImage, this._elementTitle);
 };
@@ -39,19 +58,41 @@ function handleCardClick() {
 
 function handleCardLike(id) {
   if (!this._isLike) { 
-    api.likeCard(id).then((data) => {
-      console.log(data);
-      this._elementLike.classList.toggle('element__like_active')
-    });
+    api.likeCard(id)
+      .then((data) => {
+        console.log(data);
+        this._elementLike.classList.toggle('element__like_active');
+        this._likeCount = data.likes.length;
+        this._setLikeCount();
+      })
+      .catch((err) => {
+        console.log('Ошибка лайка карточки', err);
+      })
   } else {
-    api.dislikeCard(id).then(() => this._elementLike.classList.toggle('element__like_active'));
+    api.dislikeCard(id)
+      .then((data) => {
+        this._elementLike.classList.toggle('element__like_active');
+        this._likeCount = data.likes.length;
+        this._setLikeCount();
+      })
+      .catch((err) => {
+        console.log('Ошибка дизлайка карточки', err);
+      })
   };
   this._isLike = !(this._isLike);
 };
 
-function createCard(obj, isOwner, isLike) {
+
+function handleDelClick(card) {
+  popupConfirmDel.card = card;
+  popupConfirmDel.open();
+  console.log(popupConfirmDel.card);
+};
+
+
+function createCard(obj, isOwner, isLike, likeCount = 0) {
   //функция создания карточки без размещения в DOM
-  const card = new Card(obj, '#place-template', handleCardClick, handleCardLike, isOwner, isLike);
+  const card = new Card(obj, '#place-template', { handleCardClick, handleCardLike, handleDelClick }, { isOwner, isLike, likeCount });
  // console.log(card._id);
   const cardElement = card.generateCard();
 /*   if (!isOwner) cardElement.querySelector('.element__delete').remove(); //если карточку загрузил другой пользователь, удаляем "корзину"
@@ -80,9 +121,10 @@ const popupWithEditForm = new PopupWithForm('.popup_type_edit', (evt, { name, de
 
 popupWithEditForm.setEventListeners();
 
+
 function cardsListRenderer(item) {
   //функция-рендерер карточек, которая применяется при создании списка карточек
-  const cardElement = createCard(item, true);
+  const cardElement = createCard(item, true, false);
   this.addItem(cardElement);
 }
 
@@ -99,7 +141,7 @@ const popupWithAddForm = new PopupWithForm('.popup_type_add', (evt, { place, lin
   evt.preventDefault();
   api.createNewCard({name: place, link: link})
     .then((data) => {
-      const cardElement = createCard(data, true);
+      const cardElement = createCard(data, true, false);
       cardsList.prependItem(cardElement);
     })
     .catch((err) => {
@@ -127,8 +169,9 @@ function renderCards(id) {
       renderer: (item) => {
         const isOwner = item.owner._id === id;
         const isLike = item.likes.some(user => user._id === id);
-        console.log(isOwner, isLike);
-        const cardElement = createCard(item, isOwner, isLike);
+        const likeCount = item.likes.length;
+        console.log(likeCount);
+        const cardElement = createCard(item, isOwner, isLike, likeCount);
         initialCardsList.addItem(cardElement);
       }},
       '.elements'

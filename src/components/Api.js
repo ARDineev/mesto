@@ -51,6 +51,12 @@ export default class Api {
     return this._request(`/cards/${cardId}/likes`, { method: 'DELETE', headers: this._headers});
   }
 
+  deleteCard(cardId) {
+    return this._request(`/cards/${cardId}`, { method: 'DELETE', headers: this._headers});
+  }
+
+//DELETE https://mesto.nomoreparties.co/v1/cohortId/cards/5d1f0611d321eb4bdcd707dd
+
  // PUT https://mesto.nomoreparties.co/v1/cohortId/cards/cardId/likes
 
 /*   POST https://mesto.nomoreparties.co/v1/cohortId/cards 

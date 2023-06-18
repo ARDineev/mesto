@@ -6,15 +6,17 @@ export default class Card {
   //а также css-селектор с шаблоном карточки.
   //Третьим аргументом передается функция зумирования фотографии, реализованная извне.
 
-  constructor(data, templateSelector, handleCardClick, handleCardLike, isOwner, isLike) {
+  constructor(data, templateSelector, handlers, params) {
     this._title = data.name;
     this._image = data.link;
     this._templateSelector = templateSelector;
-    this._handleCardClick = handleCardClick;
-    this._handleCardLike = handleCardLike;
-    this._id = data._id;
-    this._isOwner = isOwner;
-    this._isLike = isLike;
+    this._handleCardClick = handlers.handleCardClick;
+    this._handleCardLike = handlers.handleCardLike;
+    this._handleDelClick = handlers.handleDelClick;
+    this.id = data._id;
+    this._isOwner = params.isOwner;
+    this._isLike = params.isLike;
+    this._likeCount = params.likeCount;
   }
 
   _getTemplate() {
@@ -28,6 +30,13 @@ export default class Card {
     return cardElement;
   }
 
+  _setLikeCount() {
+    console.log(this._elementTitle);
+    this._elementCount = this._element.querySelector('.element__like-count');
+    this._elementCount.textContent = this._likeCount;
+  }
+
+
   generateCard() {
     //публичный метод, создающий карточку с переданными параметрами и добавляющий интерактивным
     //элементам карточки слушателей событий. Метод возвращает объект карточки (который затем помещается в
@@ -37,17 +46,22 @@ export default class Card {
     this._elementTitle = this._element.querySelector('.element__title');
     this._elementLike = this._element.querySelector('.element__like');
     this._elementDelBtn = this._element.querySelector('.element__delete');
+  //  this._elementCount = this._element.querySelector('.element__like-count'); //
+    this._setLikeCount(this._element);
     this._elementImage.src = this._image;
     this._elementImage.alt = this._title;
-    this._elementTitle.textContent = this._title;;
+    this._elementTitle.textContent = this._title;
+  //  this._elementCount.textContent = this._likeCount; //
+
     this._setEventListeners();
     if (!this._isOwner) this._elementDelBtn.remove();
     if (this._isLike) this._elementLike.classList.add('element__like_active');
     return this._element;
   }
 
-  _handleDelBtnClick() {
+  cardRemoveElement() {
     //приватный метод удаления карточки
+    
     this._element.remove();
     this._element = null;
   }
@@ -63,11 +77,12 @@ export default class Card {
       this._handleCardClick();
     });
     this._elementLike.addEventListener('click', () => {
-      this._handleCardLike(this._id);
+      this._handleCardLike(this.id);
     });
     if (this._isOwner) {
       this._elementDelBtn.addEventListener('click', () => {
-        this._handleDelBtnClick();
+        this._handleDelClick(this);////////////////////////////////////
+      //  this._handleDelBtnClick();
       });
     }
   }

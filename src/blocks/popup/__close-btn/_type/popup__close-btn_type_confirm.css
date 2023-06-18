@@ -1,0 +1,11 @@
+.popup__close-btn_type_confirm {
+  left: 438px;
+  bottom: 188px;
+}
+
+@media screen and (max-width: 550px) { 
+  .popup__close-btn_type_confirm { 
+    left: 262px;
+    bottom: 172px;
+  } 
+}
