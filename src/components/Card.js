@@ -4,7 +4,10 @@ export default class Card {
   //на соответствующие кнопки. Для создания карточки передаются
   //аргументы: объект со ссылкой на фотографию и текстом подписи,
   //а также css-селектор с шаблоном карточки.
-  //Третьим аргументом передается функция зумирования фотографии, реализованная извне.
+  //Третьим аргументом передается объект с функциями, реализованными извне:
+  //зумирования фотографии, лайка карточки, удаления карточки.
+  //Четвертый аргумент - объект с информацией о владельце карточки,
+  //лайкнута ли карточка пользователем, число лайков карточки вообще
 
   constructor(data, templateSelector, handlers, params) {
     this._title = data.name;
@@ -13,7 +16,7 @@ export default class Card {
     this._handleCardClick = handlers.handleCardClick;
     this._handleCardLike = handlers.handleCardLike;
     this._handleDelClick = handlers.handleDelClick;
-    this.id = data._id;
+    this.id = data._id; //уникальный номер карточки по данным с сервера
     this._isOwner = params.isOwner;
     this._isLike = params.isLike;
     this._likeCount = params.likeCount;
@@ -26,12 +29,11 @@ export default class Card {
       .content
       .querySelector('.elements__item')
       .cloneNode(true);
-
     return cardElement;
   }
 
   _setLikeCount() {
-    console.log(this._elementTitle);
+    //приватная функция, устанавливает число лайков на карточке согласно свойству объекта _likeCount
     this._elementCount = this._element.querySelector('.element__like-count');
     this._elementCount.textContent = this._likeCount;
   }
@@ -46,22 +48,18 @@ export default class Card {
     this._elementTitle = this._element.querySelector('.element__title');
     this._elementLike = this._element.querySelector('.element__like');
     this._elementDelBtn = this._element.querySelector('.element__delete');
-  //  this._elementCount = this._element.querySelector('.element__like-count'); //
     this._setLikeCount(this._element);
     this._elementImage.src = this._image;
     this._elementImage.alt = this._title;
     this._elementTitle.textContent = this._title;
-  //  this._elementCount.textContent = this._likeCount; //
-
     this._setEventListeners();
-    if (!this._isOwner) this._elementDelBtn.remove();
-    if (this._isLike) this._elementLike.classList.add('element__like_active');
+    if (!this._isOwner) this._elementDelBtn.remove(); //если не владелец карточки - убрать корзину
+    if (this._isLike) this._elementLike.classList.add('element__like_active'); //если карточка лайкнута
     return this._element;
   }
 
   cardRemoveElement() {
-    //приватный метод удаления карточки
-    
+    //метод, удаляющий карточку
     this._element.remove();
     this._element = null;
   }
@@ -81,8 +79,7 @@ export default class Card {
     });
     if (this._isOwner) {
       this._elementDelBtn.addEventListener('click', () => {
-        this._handleDelClick(this);////////////////////////////////////
-      //  this._handleDelBtnClick();
+        this._handleDelClick(this);
       });
     }
   }

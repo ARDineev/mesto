@@ -1,0 +1,11 @@
+.popup__close-btn_type_update-avatar {
+  left: 438px;
+  bottom: 280px;
+}
+
+@media screen and (max-width: 550px) { 
+  .popup__close-btn_type_update-avatar { 
+    left: 262px;
+    bottom: 264px;
+  } 
+}
