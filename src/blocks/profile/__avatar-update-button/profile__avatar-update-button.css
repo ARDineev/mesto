@@ -15,7 +15,6 @@
   background-position: 50% 50%;
   background-image: url(../../../images/profile-edit-button.svg);
   opacity: 0;
-  transition: opacity 0.5s;
 }
 
 .profile__avatar-update-button:hover {
