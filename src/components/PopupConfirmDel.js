@@ -7,22 +7,21 @@ export default class PopupConfirmDel extends Popup {
   constructor(popupSelector, handleCardDelete) {
     super(popupSelector);
     this._handleCardDelete = handleCardDelete;
-    this.card = {}; //объект карточки является свойством данного попапа. Перезаписывается извне
+    this._card = {}; //объект карточки является свойством данного попапа
+  }
+
+  setCard(card) {
+    //публичный метод, перезаписывает свойство _card
+    this._card = card;
   }
 
   _handleConfirm = () => {
-    this._handleCardDelete(this.card);
+    this._handleCardDelete(this._card);
   }
   
-  open() {
-    // публичный метод, открывает попап и устанавливает слушатель клика
+  setEventListeners() {
+    // публичный метод, устанавливающий слушатели событий
     this._popup.querySelector('.popup__submit-btn').addEventListener('click', this._handleConfirm);
-    super.open();
-  }
-
-  close() {
-    // публичный метод, закрывает попап и удаляет слушатель клика
-    this._popup.querySelector('.popup__submit-btn').removeEventListener('click', this._handleConfirm);
-    super.close();
+    super.setEventListeners();
   }
 }

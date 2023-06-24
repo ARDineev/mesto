@@ -6,7 +6,6 @@ const updateAvatarBtn = document.querySelector('.profile__avatar-update-button')
 
 const nameField = document.querySelector('.popup__input_field_name');
 const descriptionField = document.querySelector('.popup__input_field_description');
-const avatarImg = document.querySelector('.profile__avatar');
 
 const WAITING_CAPTION = 'Сохранение...';
 
@@ -33,20 +32,21 @@ const api = new Api({
 const userInfo = new UserInfo({
   //объект, управляющий данными пользователя
   profileNameSelector: '.profile__name',
-  profileDescriptionSelector: '.profile__description' 
+  profileDescriptionSelector: '.profile__description',
+  profileAvatarSelector: '.profile__avatar'
 })
 
 function handleCardDelete(card) {
   //колбэк удаления карточки для попапа подтверждения
-  api.deleteCard(card.id)
+  api.deleteCard(card.getId())
     .then(() => {
       card.cardRemoveElement();
     })
     .catch((err) => {
       console.log('Не удалось удалить карточку', err);
     })
-    .finally(() => {
-      this.close();
+    .then(() => {
+      popupConfirmDel.close();
     })
 }
 
@@ -54,48 +54,43 @@ const popupConfirmDel = new PopupConfirmDel('.popup_type_confirm', handleCardDel
 popupConfirmDel.setEventListeners();
 
 
-function handleCardClick() {
+function handleCardClick(elementImage, elementTitle) {
   //колбэк клика на картинку карточки. Передается в конструктор класса Card
-  popupWithImage.open(this._elementImage, this._elementTitle);
+  popupWithImage.open(elementImage, elementTitle);
 }
 
-function handleCardLike(id) {
+function handleCardLike(card) {
   //колбэк клика на иконку лайка. Передается в конструктор класса Card
-  if (!this._isLike) { 
-    api.likeCard(id)
-      .then((data) => {
-        this._elementLike.classList.toggle('element__like_active');
-        this._likeCount = data.likes.length; //число лайков с сервера
-        this._setLikeCount(); //записывается в карточку
-      })
-      .catch((err) => {
-        console.log('Ошибка лайка карточки', err);
-      })
+  if (!card.isLiked()) {
+    api.likeCard(card.getId())
+    .then((res) =>{
+        card.updateLikes(res.likes)
+    })
+    .catch((err) =>{
+      console.log('Ошибка лайка карточки', err);
+    });
   } else {
-    api.dislikeCard(id)
-      .then((data) => {
-        this._elementLike.classList.toggle('element__like_active');
-        this._likeCount = data.likes.length;
-        this._setLikeCount();
-      })
-      .catch((err) => {
-        console.log('Ошибка дизлайка карточки', err);
-      })
-  };
-  this._isLike = !(this._isLike);
-}
+    api.dislikeCard(card.getId())
+    .then((res) =>{
+        card.updateLikes(res.likes)
+    })
+    .catch((err) =>{
+      console.log('Ошибка дизлайка карточки', err);
+    });
+  }
+} 
 
 function handleDelClick(card) {
   //колбэк клика на иконку удаления. Передается в конструктор класса Card
   //аргумент функции - весь объект карточки
-  popupConfirmDel.card = card; //объект карточки является свойством "confirm"-попапа
+  popupConfirmDel.setCard(card);
   popupConfirmDel.open();
 }
 
-function createCard(obj, isOwner, isLike, likeCount = 0) {
+function createCard(obj, currentUserId) {
   //функция создания карточки без размещения в DOM. Помимо данных о названии карточки и ссылки на картинку (аргумент obj),
   //принимает данные о владельце карточки isOwner, лайкнута ли карточка isLike, числе лайков likeCount
-  const card = new Card(obj, '#place-template', { handleCardClick, handleCardLike, handleDelClick }, { isOwner, isLike, likeCount });
+  const card = new Card(obj, '#place-template', { handleCardClick, handleCardLike, handleDelClick }, { currentUserId });
   const cardElement = card.generateCard();
   return cardElement;
 }
@@ -120,24 +115,25 @@ const popupWithEditForm = new PopupWithForm('.popup_type_edit', (evt, { name, de
     .catch((err) => {
       console.log('Не удалось обновить данные пользователя', err);
     })
-    .finally(() => {
+    .then(() => {
       popupWithEditForm.close();
+    })
+    .finally(() => {
       changeBtnCaption(popupWithEditForm, 'Сохранить');
     })
 })
 
 popupWithEditForm.setEventListeners();
 
-function cardsListRenderer(item) {
+function cardsListRenderer(item, id) {
   //функция-рендерер карточек, которая применяется при создании списка карточек
-  const cardElement = createCard(item, true, false);
-  this.addItem(cardElement);
+  const cardElement = createCard(item, id);
+  cardsList.addItem(cardElement);
 }
 
 const cardsList = new Section({
   //объект, управляющий добавлением карточек в разметку,
   //в данном случае, в контейнер '.elements'
-  data: {},
   renderer: cardsListRenderer},
   '.elements'
 )
@@ -148,14 +144,16 @@ const popupWithAddForm = new PopupWithForm('.popup_type_add', (evt, { place, lin
   changeBtnCaption(popupWithAddForm, WAITING_CAPTION);
   api.createNewCard({name: place, link: link})
     .then((data) => {
-      const cardElement = createCard(data, true, false);
+      const cardElement = createCard(data, data.owner._id);
       cardsList.prependItem(cardElement);
     })
     .catch((err) => {
       console.log('Ошибка добавления новой карточки', err);
     })
-    .finally(() => {
+    .then(() => {
       popupWithAddForm.close();
+    })
+    .finally(() => {
       changeBtnCaption(popupWithAddForm, 'Создать');
     });
 })
@@ -168,45 +166,18 @@ const popupUpdateAvatar = new PopupWithForm('.popup_type_update-avatar', (evt, {
   changeBtnCaption(popupUpdateAvatar, WAITING_CAPTION);
   api.updateAvatar({ avatar })
     .then((data) => {
-      console.log(data);
-      avatarImg.src = data.avatar;
+      userInfo.setAvatar(data.avatar);
     })
     .catch((err) => {
       console.log('Ошибка обновления аватарки', err);
     })
-    .finally(() => {
+    .then(() => {
       popupUpdateAvatar.close();
       changeBtnCaption(popupUpdateAvatar, 'Сохранить');
     });
 })
 
 popupUpdateAvatar.setEventListeners();
-
-function renderCards(id) {
-  //функция рендера массива начальных карточек.
-  //Функция принимает id - идентификатор пользователя, для которого
-  //будут рендериться карточки
-  api.getInitialCards()
-  .then((data) => {
-    const initialCardsList = new Section({
-      //объект, цель которого взять с сервера начальные карточки и
-      //добавить их в контейнер '.elements'
-      data: data,
-      renderer: (item) => {
-        const isOwner = item.owner._id === id;
-        const isLike = item.likes.some(user => user._id === id);
-        const likeCount = item.likes.length;
-        const cardElement = createCard(item, isOwner, isLike, likeCount);
-        initialCardsList.addItem(cardElement);
-      }},
-      '.elements'
-    );
-    initialCardsList.renderItems();
-  })
-  .catch((err) => {
-    console.log('Ошибка рендера начальных карточек', err);
-  });
-}
 
 openEditBtn.addEventListener('click', () => {
   const { profileName, profileDescription } = userInfo.getUserInfo();
@@ -230,20 +201,19 @@ document.querySelectorAll('.popup__form').forEach((form) => {
 })
 
 function renderPage() {
-  //функция рендера страницы сайта. Алгоритм: получаем информацию о пользователе, его id,
-  //затем происходит рендер карточек с учетом id данного пользователя
-  api.getUserInformation()
-    .then((data) => {
-      userInfo.setUserInfo(data.name, data.about);
-      avatarImg.src = data.avatar;
-      return data._id;
-    })
-    .catch((err) => {
-      console.log('Не удалось получить данные пользователя', err);
-    })
-    .then((id) => {
-      renderCards(id)
-  }) 
+  //функция рендера страницы сайта
+  Promise.all([
+    api.getUserInformation(), 
+    api.getInitialCards() ]) 
+      .then(([info, initialCards]) => {
+        userInfo.setUserInfo(info.name, info.about);
+        userInfo.setAvatar(info.avatar);
+        cardsList.renderItems(initialCards, info._id);
+
+      }) 
+      .catch((err)=>{
+        console.log('Ошибка при загрузке страницы', err);
+      })
 }
 
 renderPage();

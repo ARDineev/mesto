@@ -1,11 +1,9 @@
 export default class Section {
   // Класс для вставки элементов в разметку.
-  // data - массив с данными, "что вставлять".
   // renderer - функция, определяющая отрисовку, "как вставлять".
   // containerSelector - селектор контейнера, "куда вставлять".
 
-  constructor({ data, renderer }, containerSelector) {
-    this._initialArray = data;
+  constructor({ renderer }, containerSelector) {
     this._container = document.querySelector(containerSelector);
     this._renderer = renderer;
   }
@@ -20,10 +18,10 @@ export default class Section {
     this._container.prepend(element);
   }
 
-  renderItems(array = this._initialArray) {
-    // публичный метод, отрисовывает весь массив данных, применив функцию renderer
+  renderItems(array, id) {
+    // публичный метод, отрисовывает массив данных для пользователя id, применив функцию renderer
     array.forEach(item => {
-      this._renderer(item);
+      this._renderer(item, id);
     });
   }
 }
